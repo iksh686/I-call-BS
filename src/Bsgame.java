@@ -65,11 +65,12 @@ public class Bsgame {
                 for (int i = 0; i < deck_size; i++){
                     int player_draw = rand.nextInt(deck.size());
 
+
                     playerhand.add(deck.remove(player_draw));
 
                     int bot_draw = rand.nextInt(deck.size());
-
                     bothand.add(deck.remove(bot_draw));
+
                 }
 
                 if(true /* exit condition*/) {
@@ -97,6 +98,9 @@ public class Bsgame {
                     player_placed_correct_card = true;
                     state = 2;
                 }
+
+                System.out.println(card_value_to_be_placed + "," + placed_card);
+
                 if(card_value_to_be_placed != placed_card.value() ){
                     int count = 0;
                     for (int i = 0; i < bothand.size(); i++) {
@@ -115,12 +119,20 @@ public class Bsgame {
                 }
 
 
+                if (placed_card.value() == 14){
+                    player_placed_correct_card = true;
+                    state = 4;
+                }
+
+                if(playerhand.size() == 0){
+                    state = 11;
+                }
 
 
                 card_value_to_be_placed = ((card_value_to_be_placed) % 14) + 1;
             }
             while (state == 2) {
-                System.out.println("State 2");
+                System.out.println("You placed down a card, and the bot thinks about it!");
                 if (rand.nextInt(100) <= 20){
                     state = 5;
                 }
@@ -130,7 +142,7 @@ public class Bsgame {
 
             }
             while (state == 3) {
-                System.out.println("State 3");
+                System.out.println("You placed down a card, and the bot analyzes quickly!");
                 if(rand.nextInt(100) <= 40){
                     state = 5;
 
@@ -140,7 +152,7 @@ public class Bsgame {
                 }
             }
             while (state == 4) {
-                System.out.println("State 4");
+                System.out.println("You placed down the card! And the bot smiles very mischievously.");
                 if (rand.nextInt(100) <= 90){
                     state = 5;
                 }
@@ -149,9 +161,9 @@ public class Bsgame {
                 }
             }
             while (state == 5) {
-                System.out.println("State 5");
+                System.out.println("Bot called BS!");
                 if(player_placed_correct_card == true){
-                    System.out.println("Bot called BS. Easy pickins");
+                    System.out.println("Easy pickins");
                     state = 10;
                 } else if (player_placed_correct_card==false) {
                     System.out.println("You might be cooked.");
@@ -159,7 +171,7 @@ public class Bsgame {
                 }
                  }
             while (state == 6) {
-                System.out.println("State 6");
+                System.out.println("The bot ponders about what choice of cards should he play.");
                 bot_has_correct_card = false;
 
                 for (int i = 0; i < bothand.size(); i++) {
@@ -173,12 +185,17 @@ public class Bsgame {
                 }
 
                 if (bot_has_correct_card) {
+                    card_value_to_be_placed = ((card_value_to_be_placed) % 14) + 1;
                     break;
                 }
                 System.out.println("Bot has placed down his chosen card!");
                 cardpile.add(bothand.remove(rand.nextInt(bothand.size())));
-                state = 7;
+                card_value_to_be_placed = ((card_value_to_be_placed) % 14) + 1;
 
+                state = 7;
+                if(bothand.size()==0){
+                    state = 12;
+                }
 
 //                if (bothand.contains(card_value_to_be_placed)){
 //                    int placed_card =
@@ -196,7 +213,6 @@ public class Bsgame {
                 }
             }
             while (state == 8) {
-                System.out.println("State 8");
                 if(bot_has_correct_card == true || player_placed_correct_card == false){
                     System.out.println("You got baited");
                     state = 9;
@@ -219,7 +235,6 @@ public class Bsgame {
             }
             while (state == 10) {
                 System.out.println("Bot got all of the cards. L bozo");
-                System.out.println("State 10");
                 bothand.addAll(cardpile);
                 cardpile.clear();
                 if(playerhand.isEmpty()){
