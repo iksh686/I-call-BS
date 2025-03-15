@@ -5,10 +5,24 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Bsgame {
+
+    public record Card(int value, String cardname) {}
+
+    public static void epiccarddeliverypackagessystem(ArrayList<Card> Playercardcardsplayer){
+        for (int i = 0; i< Playercardcardsplayer.size(); i++){
+            System.out.println((i+1) + ": " + Playercardcardsplayer.get(i));
+
+        }
+    }
+
+
     public static void main(String[] args) {
-        System.out.println("Time to play BS!");
+        boolean botbscall=false;
+        boolean playbscall=false;
+
+        System.out.println("Time to play epic card game!");
         System.out.println("How the game works:");
-        System.out.println("    In the card game BS (also known as Cheat or I Doubt It), players take turns playing cards face-down and make claims about what cards they've played. The other players can challenge the claim, and if they think the\n player is lying, they can call \"BS!\" If the card claimed doesn't match the card played, the liar must pick up the entire pile. If the card claimed is truthful, the challenger must pick up the pile instead. The goal is to be the\n first player to get rid of all their cards. At the beginning of the game, after shuffling the deck, a random card is drawn to begin the play. This card could be any card from the deck, so it's not predetermined like the\n Ace of Spades. The first player places this random card face down on the table and claims it’s a specific rank—say, a \"2 of Diamonds.\" They may or may not be telling the truth. The next player then takes their turn. They\n must play a card of the next rank in the sequence, which could be the \"3 of Hearts\" if the claim was about a \"2 of Diamonds.\" They again make a claim about the card they've placed, and the next player has the option to\n either believe them or challenge by calling \"BS. If a challenge is made, the card in question is revealed. If the player was lying, they must pick up the pile; if they were telling the truth, the challenger must pick up\n the pile. The game continues, with players taking turns, claiming the next card in the sequence, and possibly lying about what they've played. As the game progresses, players must keep track of the ranks and attempt to\n deceive others into believing they have played a card that aligns with the sequence. However, they must also be cautious not to get caught in a lie, as this will result in a penalty of picking up the entire pile of\n discarded cards. The game continues until one player has successfully discarded all their cards and is declared the winner. If a player challenges too often without cause, they may end up accumulating too many penalty\n cards, which puts them at a disadvantage.");
+        System.out.println("    In this super epic card game, players take turns playing cards face-down and make claims about what cards they've played. The other players can challenge the claim, and if they think the\n player is lying, they can call \"BS!\" If the card claimed doesn't match the card played, the liar must pick up the entire pile. If the card claimed is truthful, the challenger must pick up the pile instead. The goal is to be the\n first player to get rid of all their cards. At the beginning of the game, after shuffling the deck, a random card is drawn to begin the play. This card could be any card from the deck, so it's not predetermined like the\n Ace of Spades. The first player places this random card face down on the table and claims it’s a specific rank—say, a \"2 of Diamonds.\" They may or may not be telling the truth. The next player then takes their turn. They\n must play a card of the next rank in the sequence, which could be the \"3 of Hearts\" if the claim was about a \"2 of Diamonds.\" They again make a claim about the card they've placed, and the next player has the option to\n either believe them or challenge by calling \"BS. If a challenge is made, the card in question is revealed. If the player was lying, they must pick up the pile; if they were telling the truth, the challenger must pick up\n the pile. The game continues, with players taking turns, claiming the next card in the sequence, and possibly lying about what they've played. As the game progresses, players must keep track of the ranks and attempt to\n deceive others into believing they have played a card that aligns with the sequence. However, they must also be cautious not to get caught in a lie, as this will result in a penalty of picking up the entire pile of\n discarded cards. The game continues until one player has successfully discarded all their cards and is declared the winner. If a player challenges too often without cause, they may end up accumulating too many penalty\n cards, which puts them at a disadvantage.");
         ArrayList<Card> deck = new ArrayList<>();
         Card[] _deck = {
                 new Card(2,"2 of Hearts"), new Card(3,"3 of Hearts"),new Card(4,"4 of Hearts"), new Card(5,"5 of Hearts"), new Card(6,"6 of Hearts"), new Card(7,"7 of Hearts"), new Card(8,"8 of Hearts"), new Card(9,"9 of Hearts"), new Card(10,"10 of Hearts"), new Card(11,"Jack of Hearts"), new Card(12,"Queen of Hearts"),new Card(13,"King of Hearts"), new Card(1,"Ace of Hearts"),
@@ -78,11 +92,9 @@ public class Bsgame {
                 }
             }
             while (state == 1) {
+                System.out.println("The card value supposed to be placed is " + card_value_to_be_placed + "!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 player_placed_correct_card = false;
-                for (int i = 0; i< playerhand.size(); i++){
-                    System.out.println((i+1) + ": " + playerhand.get(i));
-
-                }
+               epiccarddeliverypackagessystem(playerhand);
                 int playerinp = scanner.nextInt();
                 System.out.println("You placed down your chosen card!");
                 Card placed_card = playerhand.remove(playerinp-1);
@@ -102,12 +114,7 @@ public class Bsgame {
                 System.out.println(card_value_to_be_placed + "," + placed_card);
 
                 if(card_value_to_be_placed != placed_card.value() ){
-                    int count = 0;
-                    for (int i = 0; i < bothand.size(); i++) {
-                        if (bothand.get(i).value() == card_value_to_be_placed) {
-                            count++;
-                        }
-                    }
+                    int count = getCount(bothand, card_value_to_be_placed);
                     if(count == 4){
 
                         state = 4;
@@ -161,6 +168,7 @@ public class Bsgame {
                 }
             }
             while (state == 5) {
+                botbscall = true;
                 System.out.println("Bot called BS!");
                 if(player_placed_correct_card == true){
                     System.out.println("Easy pickins");
@@ -203,16 +211,26 @@ public class Bsgame {
             }
             while (state == 7) {
                 System.out.println("Bot placed down a card. Call BS or play?");
-                scanner.nextLine();
                 String playerinp = scanner.nextLine().trim().toLowerCase();
+
                 if(playerinp.contains("bs")){
+                    playbscall = true;
                     state = 8;
                 }
-                else{
+                else if (playerinp.contains("pl")){
                     state = 1;
+                } else {
+                    playerinp = scanner.nextLine().trim().toLowerCase();
+                    if(playerinp.contains("bs")){
+                        playbscall = true;
+                        state = 8;
+                    }
+                    else
+                        state = 1;
                 }
             }
             while (state == 8) {
+
                 if(bot_has_correct_card == true || player_placed_correct_card == false){
                     System.out.println("You got baited");
                     state = 9;
@@ -230,18 +248,30 @@ public class Bsgame {
                     state = 12;
                 }
                 else{
-                    state = 6;
+                    if(playbscall == true){
+                        state = 1;
+                        playbscall=false;
+                    }
+                    else
+                        state = 6;
                 }
             }
             while (state == 10) {
                 System.out.println("Bot got all of the cards. L bozo");
                 bothand.addAll(cardpile);
                 cardpile.clear();
+//                state = 1;
                 if(playerhand.isEmpty()){
                     state = 11;
                 }
                 else{
-                    state = 6;
+                    if(botbscall == true){
+                        state=6;
+                        botbscall=false;
+                    }
+                    else
+                        state = 1;
+
                 }
             }
             while (state == 11) {
@@ -258,5 +288,15 @@ public class Bsgame {
 
 
 
+    }
+
+    public static int getCount(ArrayList<Card> bothand, int card_value_to_be_placed) {
+        int count = 0;
+        for (int i = 0; i < bothand.size(); i++) {
+            if (bothand.get(i).value() == card_value_to_be_placed) {
+                count++;
+            }
+        }
+        return count;
     }
 }
