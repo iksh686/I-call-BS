@@ -91,7 +91,7 @@ public class Bsgame {
                     state = 1;
                 }
             }
-            while (state == 1) {
+            while (state == 1) {//player plays
                 System.out.println("The card value supposed to be placed is " + card_value_to_be_placed + "!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 player_placed_correct_card = false;
                epiccarddeliverypackagessystem(playerhand);
@@ -126,7 +126,7 @@ public class Bsgame {
                 }
 
 
-                if (placed_card.value() == 14){
+                if (placed_card.value() == 14){//joker
                     player_placed_correct_card = true;
                     state = 4;
                 }
@@ -138,7 +138,7 @@ public class Bsgame {
 
                 card_value_to_be_placed = ((card_value_to_be_placed) % 14) + 1;
             }
-            while (state == 2) {
+            while (state == 2) {//20% chance to get called when correct card placed
                 System.out.println("You placed down a card, and the bot thinks about it!");
                 if (rand.nextInt(100) <= 20){
                     state = 5;
@@ -148,7 +148,7 @@ public class Bsgame {
                 }
 
             }
-            while (state == 3) {
+            while (state == 3) {//40% chance to get called when wrong card placed and card is not in bot's hand
                 System.out.println("You placed down a card, and the bot analyzes quickly!");
                 if(rand.nextInt(100) <= 40){
                     state = 5;
@@ -158,7 +158,7 @@ public class Bsgame {
                     state = 6;
                 }
             }
-            while (state == 4) {
+            while (state == 4) {//90% chance to get called when wrong card placed and the same card in bot's hand
                 System.out.println("You placed down the card! And the bot smiles very mischievously.");
                 if (rand.nextInt(100) <= 90){
                     state = 5;
@@ -167,7 +167,7 @@ public class Bsgame {
                     state = 6;
                 }
             }
-            while (state == 5) {
+            while (state == 5) {//determine whether bot is correct call
                 botbscall = true;
                 System.out.println("Bot called BS!");
                 if(player_placed_correct_card == true){
@@ -178,7 +178,7 @@ public class Bsgame {
                     state = 9;
                 }
                  }
-            while (state == 6) {
+            while (state == 6) {//bot plays
                 System.out.println("The bot ponders about what choice of cards should he play.");
                 bot_has_correct_card = false;
 
@@ -209,7 +209,7 @@ public class Bsgame {
 //                    int placed_card =
 //                }
             }
-            while (state == 7) {
+            while (state == 7) {//either tells player to play or call BS
                 System.out.println("Bot placed down a card. Call BS or play?");
                 String playerinp = scanner.nextLine().trim().toLowerCase();
 
@@ -229,7 +229,7 @@ public class Bsgame {
                         state = 1;
                 }
             }
-            while (state == 8) {
+            while (state == 8) { //check if either BS call is correct or wrong or yes
 
                 if(bot_has_correct_card == true || player_placed_correct_card == false){
                     System.out.println("You got baited");
@@ -239,7 +239,7 @@ public class Bsgame {
                     state = 10;
                 }
             }
-            while (state == 9) {
+            while (state == 9) {//either bot call was correct or player card was wrong
                 System.out.println("You took the cardpile!!");
                 playerhand.addAll(cardpile);
 
@@ -256,7 +256,7 @@ public class Bsgame {
                         state = 6;
                 }
             }
-            while (state == 10) {
+            while (state == 10) {//bot gets all cards(either bot call is wrong or player call is correct)
                 System.out.println("Bot got all of the cards. L bozo");
                 bothand.addAll(cardpile);
                 cardpile.clear();
@@ -274,10 +274,10 @@ public class Bsgame {
 
                 }
             }
-            while (state == 11) {
+            while (state == 11) {//ez dubs
                 System.out.println("You won");
             }
-            while (state == 12) {
+            while (state == 12) {//bot wins
                 System.out.println("Bot won, you lost, womp womp");
             }
 
