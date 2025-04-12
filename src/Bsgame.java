@@ -93,6 +93,8 @@ public class Bsgame {
             }
             while (state == 1) {//player plays
                 System.out.println("The card value supposed to be placed is " + card_value_to_be_placed + "!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                System.out.println("Type the number of which card you want to put down");
+                System.out.println("A joker can be put down for any card");
                 player_placed_correct_card = false;
                epiccarddeliverypackagessystem(playerhand);
                 int playerinp = scanner.nextInt();
